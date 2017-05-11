@@ -37,7 +37,7 @@ public class Main {
         
         GraphPointCover graphPointCover = new GraphPointCover();
         
-        System.out.println(graphPointCover.calculate(graph).toString());
+        System.out.println(graphPointCover.calculateStrict(graph).toString());
         
         
     }

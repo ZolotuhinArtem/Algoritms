@@ -20,7 +20,7 @@ public class GraphPointCover {
     *     0 0 0 0 <br>
     *     0 0 0 0 <br>
     */
-    public List<Integer> calculate(Integer[][] graph){
+    public List<Integer> calculateStrict(Integer[][] graph){
         
         if (graph.length <= 0) {
             throw new IllegalArgumentException("invalid matrix");
