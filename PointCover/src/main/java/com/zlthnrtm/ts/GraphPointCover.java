@@ -5,7 +5,6 @@ import java.util.List;
 
 public class GraphPointCover {
     
-
     /**
     * Point[][] graph must be square.
     * Please, make full matrix! <br>
@@ -20,6 +19,7 @@ public class GraphPointCover {
     *     0 0 0 0 <br>
     *     0 0 0 0 <br>
     */
+    
     public List<Integer> calculateStrict(Integer[][] graph){
         
         if (graph.length <= 0) {
