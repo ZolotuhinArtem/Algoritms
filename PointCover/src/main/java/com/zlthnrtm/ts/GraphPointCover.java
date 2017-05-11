@@ -6,8 +6,19 @@ import java.util.List;
 public class GraphPointCover {
     
 
-    /*
-     Point[][] graph must be square
+    /**
+    * Point[][] graph must be square.
+    * Please, make full matrix! <br>
+    * Right: <br>
+    *     0 1 1 0 <br>
+    *     1 0 0 1 <br>
+    *     1 0 0 0 <br>
+    *     0 1 0 0 <br>
+    * Wrong: <br>
+    *     0 1 1 0 <br>
+    *     0 0 0 1 <br>
+    *     0 0 0 0 <br>
+    *     0 0 0 0 <br>
     */
     public List<Integer> calculate(Integer[][] graph){
         
@@ -55,8 +66,10 @@ public class GraphPointCover {
         for(int i = 0; i < graph.length; i++) {
             for(int j = 0; j <= i; j++ ) {
                 if (graph[i][j] != null) {
-                    count++;
-                }
+                    if (graph[i][j] != 0) {
+                        count++;
+                    }
+                } 
             }
         }
         
