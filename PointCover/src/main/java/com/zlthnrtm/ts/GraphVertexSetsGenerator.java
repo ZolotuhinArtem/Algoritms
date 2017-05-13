@@ -15,8 +15,6 @@ public class GraphVertexSetsGenerator{
     
     public List<Set<Vertex>> generate(Set<Vertex> vertexs){
         
-        
-        
         List<Set<Vertex>> sets = new ArrayList<>();
         
         Map<Integer, Vertex> vertexMap = new HashMap<Integer, Vertex>();
