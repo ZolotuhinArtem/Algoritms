@@ -1,6 +1,8 @@
 package com.zlthnrtm.ts;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -44,6 +46,32 @@ public class GraphVertexCover {
         }
         
         return vertexs;
+    }
+    
+    public Set<Vertex> calculateGreedy(EdgeListGraph edgeListGraph) {
         
+        EdgeListGraph graph = edgeListGraph.getCopy();
+        
+        Set<Vertex> vertexs = new HashSet<>();
+        Vertex maxValencyVertex;
+        while (graph.edgeCount() > 0) {
+            
+            maxValencyVertex = Collections.max(graph.getVertexs(), (o1, o2) -> {
+                if (o1.getValency() > o2.getValency()) {
+                    return 1;
+                }
+                if (o1.getValency() < o2.getValency()) {
+                    return -1;
+                }
+                return 0; 
+            });
+            
+            vertexs.add(maxValencyVertex);
+            
+            graph.removeVertex(maxValencyVertex);
+            graph.updateVertexsValency();
+            
+        }
+        return vertexs;
     }
 }

@@ -1,30 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.zlthnrtm.ts;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- *
- * @author manjaro
- */
 public class EdgeListGraph{
     
     private List<Edge> edges;
-
-    public EdgeListGraph() {
-        this.edges = new ArrayList<>();
-    }
-
+    
     public EdgeListGraph(List<Edge> edges) {
-        this.edges = edges;
+        this.setEdges(edges);
     }
     
     public void removeEdge(Edge edge) {
@@ -65,12 +51,28 @@ public class EdgeListGraph{
     public EdgeListGraph getCopy(){
         List<Edge> tempList = new ArrayList<>(this.edges.size());
         for(Edge edge: this.edges) {
-            tempList.add(edge);
+            tempList.add(edge.getCopy());
         }
         return new EdgeListGraph(tempList);
     }
     
-    public Set<Vertex> getVertexs(){
+    public void updateVertexsValency(){
+        for (Edge edge: this.edges) {
+            edge.getVertex1().setValency(0);
+            edge.getVertex2().setValency(0);
+        }
+        for (Edge edge: this.edges) {
+            /** if vertex not alone. 
+            *   P.S: if vertex1 == vertex2 than edge is alone vertex
+            */
+            if (!edge.getVertex1().equals(edge.getVertex2())) {
+                edge.getVertex1().setValency(edge.getVertex1().getValency() + 1);
+                edge.getVertex2().setValency(edge.getVertex2().getValency() + 1);
+            }
+        }
+    }
+
+    public Set<Vertex> getVertexs() {
         Set<Vertex> vertexs = new HashSet<>();
         for(Edge edge: this.edges) {
             vertexs.add(edge.getVertex1());
@@ -79,4 +81,9 @@ public class EdgeListGraph{
         return vertexs;
     }
     
+    private void setEdges(List<Edge> edges) {
+        this.edges = edges;
+        updateVertexsValency();
+    }
 }
+ 

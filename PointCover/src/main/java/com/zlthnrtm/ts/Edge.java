@@ -2,7 +2,7 @@ package com.zlthnrtm.ts;
 
 import java.util.Objects;
 
-public class Edge {
+public class Edge implements Copyable<Edge>{
     
     private Vertex vertex1;
     
@@ -64,6 +64,11 @@ public class Edge {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Edge getCopy() {
+        return new Edge(this.vertex1.getCopy(), this.vertex2.getCopy());
     }
     
     
