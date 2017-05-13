@@ -7,13 +7,15 @@ package com.zlthnrtm.ts;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
  * @author manjaro
  */
-public class EdgeListGraph {
+public class EdgeListGraph{
     
     private List<Edge> edges;
 
@@ -58,6 +60,23 @@ public class EdgeListGraph {
             int k = (int) Math.round(Math.random() * (tempList.size() - 1));
             return tempList.get(k);
         }
+    }
+    
+    public EdgeListGraph getCopy(){
+        List<Edge> tempList = new ArrayList<>(this.edges.size());
+        for(Edge edge: this.edges) {
+            tempList.add(edge);
+        }
+        return new EdgeListGraph(tempList);
+    }
+    
+    public Set<Vertex> getVertexs(){
+        Set<Vertex> vertexs = new HashSet<>();
+        for(Edge edge: this.edges) {
+            vertexs.add(edge.getVertex1());
+            vertexs.add(edge.getVertex2());
+        }
+        return vertexs;
     }
     
 }

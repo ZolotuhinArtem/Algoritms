@@ -57,10 +57,10 @@ public class Edge {
             return false;
         }
         final Edge other = (Edge) obj;
-        if (!Objects.equals(this.vertex1, other.vertex1)) {
+        if (!Objects.equals(this.vertex1, other.vertex1) && !Objects.equals(this.vertex1, other.vertex2)) {
             return false;
         }
-        if (!Objects.equals(this.vertex2, other.vertex2)) {
+        if (!Objects.equals(this.vertex2, other.vertex2) && !Objects.equals(this.vertex2, other.vertex1)) {
             return false;
         }
         return true;

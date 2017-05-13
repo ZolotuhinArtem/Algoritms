@@ -2,33 +2,49 @@ package com.zlthnrtm.ts;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class GraphVertexSetsGenerator{
  
     public GraphVertexSetsGenerator() {        
     }
     
-    public List<List<Integer>> generate(int vertexCount){
+    public List<Set<Vertex>> generate(Set<Vertex> vertexs){
+        
+        
+        
+        List<Set<Vertex>> sets = new ArrayList<>();
+        
+        Map<Integer, Vertex> vertexMap = new HashMap<Integer, Vertex>();
+        int k = 0;
+        
+        for(Vertex vertex: vertexs) {
+            vertexMap.put(k, vertex);
+            k++;
+        }
+        
+        Set<Vertex> tempVertexs;
         int current = 0;
         
-        List<List<Integer>> sets = new ArrayList<>();
-        
-        while (this.hasNext(current, vertexCount)) {
-            ArrayList<Integer> vertexs = new ArrayList<>();
+        while (this.hasNext(current, vertexs.size())) {
+            tempVertexs = new HashSet<>();
             String str = Integer.toBinaryString(current);
             for(int i = 0; i < str.length(); i++) {
                 if (str.charAt(i) == '1') {
-                    vertexs.add(str.length() - i - 1);
+                    tempVertexs.add(vertexMap.get(str.length() - i - 1));
                 }
             }
             current++;
-            sets.add(vertexs);
+            sets.add(tempVertexs);
         }
         
-        sets.sort(new Comparator<List<Integer>>(){
+        sets.sort(new Comparator<Set<Vertex>>(){
             @Override
-            public int compare(List<Integer> o1, List<Integer> o2) {
+            public int compare(Set<Vertex> o1, Set<Vertex> o2) {
                 if (o1.size() > o2.size()) {
                     return 1;
                 }
