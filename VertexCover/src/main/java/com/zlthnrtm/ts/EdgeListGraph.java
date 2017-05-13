@@ -1,8 +1,10 @@
 package com.zlthnrtm.ts;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class EdgeListGraph{
@@ -50,8 +52,20 @@ public class EdgeListGraph{
     
     public EdgeListGraph getCopy(){
         List<Edge> tempList = new ArrayList<>(this.edges.size());
+        Map<Vertex, Vertex> vertexCopies = new HashMap<>();
+        
+        Edge tempEdge;
         for(Edge edge: this.edges) {
-            tempList.add(edge.getCopy());
+            if (vertexCopies.get(edge.getVertex1()) == null) {
+                vertexCopies.put(edge.getVertex1(), edge.getVertex1().getCopy());
+            }
+            if (vertexCopies.get(edge.getVertex2()) == null) {
+                vertexCopies.put(edge.getVertex2(), edge.getVertex2().getCopy());
+            }
+            tempEdge = edge.getCopy();
+            tempEdge.setVertex1(vertexCopies.get(edge.getVertex1()));
+            tempEdge.setVertex2(vertexCopies.get(edge.getVertex2()));
+            tempList.add(tempEdge);
         }
         return new EdgeListGraph(tempList);
     }

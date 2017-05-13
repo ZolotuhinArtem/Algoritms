@@ -53,7 +53,7 @@ public class Vertex implements Copyable<Vertex>{
             return false;
         }
         final Vertex other = (Vertex) obj;
-        if (!Objects.equals(this.index, other.index)) {
+        if (!this.index.equals(other.index)) {
             return false;
         }
         return true;

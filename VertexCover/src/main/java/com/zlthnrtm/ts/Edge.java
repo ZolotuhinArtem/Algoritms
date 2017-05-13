@@ -57,10 +57,10 @@ public class Edge implements Copyable<Edge>{
             return false;
         }
         final Edge other = (Edge) obj;
-        if (!Objects.equals(this.vertex1, other.vertex1) && !Objects.equals(this.vertex1, other.vertex2)) {
+        if (!this.vertex1.equals(other.vertex1)) {
             return false;
         }
-        if (!Objects.equals(this.vertex2, other.vertex2) && !Objects.equals(this.vertex2, other.vertex1)) {
+        if (!this.vertex2.equals(other.vertex2)) {
             return false;
         }
         return true;
