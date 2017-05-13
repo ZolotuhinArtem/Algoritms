@@ -36,13 +36,18 @@ public class GraphVertexCover {
         
         List<Vertex> vertexs = new ArrayList<>();
         Edge edge;
-        Vertex vertex;
+        Vertex vertex1, vertex2;
         
         while (graph.edgeCount() > 0) {
             edge = graph.getSomeEdge();
-            vertex = edge.getVertex1();
-            vertexs.add(vertex);
-            graph.removeVertex(vertex);
+            vertex1 = edge.getVertex1();
+            vertex2 = edge.getVertex2();
+            vertexs.add(vertex1);
+            graph.removeVertex(vertex1);
+            if (!vertex1.equals(vertex2)) {
+                vertexs.add(vertex2);
+                graph.removeVertex(vertex2);
+            }
         }
         
         return vertexs;
