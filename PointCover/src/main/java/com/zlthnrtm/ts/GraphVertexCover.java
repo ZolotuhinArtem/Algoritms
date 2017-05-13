@@ -1,12 +1,14 @@
 package com.zlthnrtm.ts;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public class GraphPointCover {
+public class GraphVertexCover {
     
     /**
-    * Point[][] graph must be square.
+    * Integer[][] graph must be square.
     * Please, make full matrix! <br>
     * Right: <br>
     *     0 1 1 0 <br>
@@ -30,24 +32,41 @@ public class GraphPointCover {
             throw new IllegalArgumentException("matrix must be square");
         }
         
-        GraphPoinSetsGenerator graphPoinSetsGenerator = new GraphPoinSetsGenerator();
+        GraphVertexSetsGenerator graphVertexSetsGenerator = new GraphVertexSetsGenerator();
         
-        for(List<Integer> pointList: graphPoinSetsGenerator.generate(getCount(graph))){
+        for(List<Integer> vertexs: graphVertexSetsGenerator.generate(getCount(graph))){
             Integer[][] copy = getCopy(graph);
             
-            for (Integer point: pointList) {
+            for (Integer vertex: vertexs) {
                 for (int i = 0; i < copy.length; i++) {
-                    copy[i][point] = null;
-                    copy[point][i] = null;
+                    copy[i][vertex] = null;
+                    copy[vertex][i] = null;
                 }
             }
             
             if (getCount(copy) == 0) {
-                return pointList;
+                return vertexs;
             }
         }
         
         return new ArrayList<Integer>();
+    }
+    
+    public List<Integer> calculateLazy(EdgeListGraph graph) {
+        
+        List<Integer> vertexs = new ArrayList<>();
+        Edge edge;
+        Vertex vertex;
+        
+        while (graph.edgeCount() > 0) {
+            edge = graph.getSomeEdge();
+            vertex = edge.getVertex1();
+            vertexs.add(vertex.getIndex());
+            graph.removeVertex(vertex);
+        }
+        
+        return vertexs;
+        
     }
     
     private Integer[][] getCopy(Integer[][] src){

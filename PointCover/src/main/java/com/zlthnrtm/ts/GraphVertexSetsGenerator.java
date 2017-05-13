@@ -1,30 +1,29 @@
 package com.zlthnrtm.ts;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class GraphPoinSetsGenerator{
+public class GraphVertexSetsGenerator{
  
-    public GraphPoinSetsGenerator() {        
+    public GraphVertexSetsGenerator() {        
     }
     
-    public List<List<Integer>> generate(int pointCount){
+    public List<List<Integer>> generate(int vertexCount){
         int current = 0;
         
         List<List<Integer>> sets = new ArrayList<>();
         
-        while (this.hasNext(current, pointCount)) {
-            ArrayList<Integer> points = new ArrayList<>();
+        while (this.hasNext(current, vertexCount)) {
+            ArrayList<Integer> vertexs = new ArrayList<>();
             String str = Integer.toBinaryString(current);
             for(int i = 0; i < str.length(); i++) {
                 if (str.charAt(i) == '1') {
-                    points.add(str.length() - i - 1);
+                    vertexs.add(str.length() - i - 1);
                 }
             }
             current++;
-            sets.add(points);
+            sets.add(vertexs);
         }
         
         sets.sort(new Comparator<List<Integer>>(){
@@ -45,10 +44,10 @@ public class GraphPoinSetsGenerator{
         return sets;
     }
     
-    private boolean hasNext(int current, int pointCount){
+    private boolean hasNext(int current, int vertexCount){
         String str = Integer.toBinaryString(current);
         
-        if (str.length() <= pointCount) {
+        if (str.length() <= vertexCount) {
             return true;
         }
         

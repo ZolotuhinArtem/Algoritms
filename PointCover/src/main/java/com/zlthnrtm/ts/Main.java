@@ -1,5 +1,8 @@
 package com.zlthnrtm.ts;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
         
@@ -24,9 +27,20 @@ public class Main {
         
         graph[6][6] = 1;
         
-        GraphPointCover graphPointCover = new GraphPointCover();
+        GraphVertexCover graphVertexCover = new GraphVertexCover();
         
-        System.out.println(graphPointCover.calculateStrict(graph).toString());
+        System.out.println("Strict: " + graphVertexCover.calculateStrict(graph).toString());
         
+        List<Edge> edges = new ArrayList<>(7);
+        edges.add(new Edge(new Vertex(0), new Vertex(1)));
+        edges.add(new Edge(new Vertex(1), new Vertex(2)));
+        edges.add(new Edge(new Vertex(2), new Vertex(3)));
+        edges.add(new Edge(new Vertex(3), new Vertex(5)));
+        edges.add(new Edge(new Vertex(3), new Vertex(4)));
+        edges.add(new Edge(new Vertex(4), new Vertex(0)));
+        edges.add(new Edge(new Vertex(6), new Vertex(6)));
+        EdgeListGraph edgeListGraph = new EdgeListGraph(edges);
+        
+        System.out.println("Lazy: " + graphVertexCover.calculateLazy(edgeListGraph).toString());
     }
 }
