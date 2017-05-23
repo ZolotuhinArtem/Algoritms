@@ -43,25 +43,119 @@ public class Main {
         
         StatisticDataBase statisticDataBase = new ExelStatisticDataBase();
         
-        long startTime, totalTime;
+        Long startTime, totalTime;
         
         double averageTime;
         
         for (int i = MINIMAL_VERTEX_COUNT; i < maxVertexCount; i += vertexStep) {
-            
             System.out.println("Current vertex count: " + i);
             
             averageTime = 0.0;
             for (int j = 0; j < testCountPerTest; j++) {
-                elg = GraphGenerator.fullGraphGeneration(maxVertexCount);
+                elg = GraphGenerator.fullGraphGeneration(i);
                 startTime = System.nanoTime();
                 gvc.calculateStrict(elg);
                 totalTime = System.nanoTime() - startTime;
                 averageTime += (double) totalTime / (double) testCountPerTest;
             }
-            System.out.println("Average time for Strict: " + averageTime);
+            System.out.println("Average time for FULL Strict: " + averageTime + " nanoseconds");
+            statisticDataBase.addNode(i, i * (i - 1) / 2, averageTime, "FSTRICT");
             
+            averageTime = 0.0;
+            for (int j = 0; j < testCountPerTest; j++) {
+                elg = GraphGenerator.halfFilledGrafGeneration(i);
+                startTime = System.nanoTime();
+                gvc.calculateStrict(elg);
+                totalTime = System.nanoTime() - startTime;
+                averageTime += (double) totalTime / (double) testCountPerTest;
+            }
+            System.out.println("Average time for Half Strict: " + averageTime + " nanoseconds");
+            statisticDataBase.addNode(i, (i + 2) * (i - 1) / 4, averageTime, "HSTRICT");
+            
+            averageTime = 0.0;
+            for (int j = 0; j < testCountPerTest; j++) {
+                elg = GraphGenerator.treeGeneration(i);
+                startTime = System.nanoTime();
+                gvc.calculateStrict(elg);
+                totalTime = System.nanoTime() - startTime;
+                averageTime += (double) totalTime / (double) testCountPerTest;
+            }
+            System.out.println("Average time for Tree Strict: " + averageTime + " nanoseconds" + "\n");
+            statisticDataBase.addNode(i, i - 1, averageTime, "TSTRICT");
+            
+            //------------------------------------------------------------------------------------------
+            averageTime = 0.0;
+            for (int j = 0; j < testCountPerTest; j++) {
+                elg = GraphGenerator.fullGraphGeneration(i);
+                startTime = System.nanoTime();
+                gvc.calculateLazy(elg);
+                totalTime = System.nanoTime() - startTime;
+                averageTime += (double) totalTime / (double) testCountPerTest;
+            }
+            System.out.println("Average time for FULL Lazy: " + averageTime + " nanoseconds");
+            statisticDataBase.addNode(i, i * (i - 1) / 2, averageTime, "FLAZY");
+            
+            averageTime = 0.0;
+            for (int j = 0; j < testCountPerTest; j++) {
+                elg = GraphGenerator.halfFilledGrafGeneration(i);
+                startTime = System.nanoTime();
+                gvc.calculateLazy(elg);
+                totalTime = System.nanoTime() - startTime;
+                averageTime += (double) totalTime / (double) testCountPerTest;
+            }
+            System.out.println("Average time for Half Lazy: " + averageTime + " nanoseconds");
+            statisticDataBase.addNode(i, (i + 2) * (i - 1) / 4, averageTime, "HLAZY");
+            
+            averageTime = 0.0;
+            for (int j = 0; j < testCountPerTest; j++) {
+                elg = GraphGenerator.treeGeneration(i);
+                startTime = System.nanoTime();
+                gvc.calculateLazy(elg);
+                totalTime = System.nanoTime() - startTime;
+                averageTime += (double) totalTime / (double) testCountPerTest;
+            }
+            System.out.println("Average time for Tree Lazy: " + averageTime + " nanoseconds" + "\n");
+            statisticDataBase.addNode(i, i - 1, averageTime, "TLAZY");
+            
+            //-----------------------------------------------------------------------------------------
+            
+            averageTime = 0.0;
+            for (int j = 0; j < testCountPerTest; j++) {
+                elg = GraphGenerator.fullGraphGeneration(i);
+                startTime = System.nanoTime();
+                gvc.calculateGreedy(elg);
+                totalTime = System.nanoTime() - startTime;
+                averageTime += (double) totalTime / (double) testCountPerTest;
+            }
+            System.out.println("Average time for FULL Greedy: " + averageTime + " nanoseconds");
+            statisticDataBase.addNode(i, i * (i - 1) / 2, averageTime, "FGREEDY");
+            
+            averageTime = 0.0;
+            for (int j = 0; j < testCountPerTest; j++) {
+                elg = GraphGenerator.halfFilledGrafGeneration(i);
+                startTime = System.nanoTime();
+                gvc.calculateGreedy(elg);
+                totalTime = System.nanoTime() - startTime;
+                averageTime += (double) totalTime / (double) testCountPerTest;
+            }
+            System.out.println("Average time for Half Greedy: " + averageTime + " nanoseconds");
+            statisticDataBase.addNode(i, (i + 2) * (i - 1) / 4, averageTime, "HGREEDY");
+            
+            averageTime = 0.0;
+            for (int j = 0; j < testCountPerTest; j++) {
+                elg = GraphGenerator.treeGeneration(i);
+                startTime = System.nanoTime();
+                gvc.calculateGreedy(elg);
+                totalTime = System.nanoTime() - startTime;
+                averageTime += (double) totalTime / (double) testCountPerTest;
+            }
+            System.out.println("Average time for Tree Greedy: " + averageTime + " nanoseconds" + "\n");
+            statisticDataBase.addNode(i, i - 1, averageTime, "TGREEDY");
+            
+            
+            System.out.println();
             drawProgress(i - MINIMAL_VERTEX_COUNT, maxVertexCount - MINIMAL_VERTEX_COUNT - 1);
+            System.out.println("\n----------------------------------------------------------------------------\n");
         }
         
         
