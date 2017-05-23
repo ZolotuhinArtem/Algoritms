@@ -2,34 +2,27 @@ package com.zlthnrtm.ts;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
         
-//        List<Edge> edges = new ArrayList<>(7);
-//        
-//        //Creating of vertexs
-//        Vertex[] vertexs = new Vertex[7];
-//        for (int i = 0; i < vertexs.length; i++) {
-//            vertexs[i] = new Vertex(i, 0);
-//        }
-//        
-//        //Creating edges
-//        edges.add(new Edge(vertexs[0], vertexs[1]));
-//        edges.add(new Edge(vertexs[1], vertexs[2]));
-//        edges.add(new Edge(vertexs[2], vertexs[3]));
-//        edges.add(new Edge(vertexs[3], vertexs[5]));
-//        edges.add(new Edge(vertexs[3], vertexs[4]));
-//        edges.add(new Edge(vertexs[4], vertexs[0]));
-//        edges.add(new Edge(vertexs[6], vertexs[6]));
-//        
-//        EdgeListGraph edgeListGraph = new EdgeListGraph(edges);
+        System.out.println("");
         
+        for (int i = 0; i < 5; i++) {
+            System.out.println(GraphGenerator.generate(5, 0.5));
+            System.out.println(GraphGenerator.generate(5, 1));
+        }
+        
+        
+    }
+    
+    public static void demonstration(){
         EdgeListGraph edgeListGraph = SimpleGraphBuilder.vertexAsInteger()
                 .addEdge(0, 1)
                 .addEdge(1, 2)
                 .addEdge(2, 3)
-                .addEdge(3, 5)
                 .addEdge(3, 4)
                 .addEdge(4, 0)
                 .addEdge(6, 6)

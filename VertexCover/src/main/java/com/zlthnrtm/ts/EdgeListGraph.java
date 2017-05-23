@@ -99,5 +99,25 @@ public class EdgeListGraph{
         this.edges = edges;
         updateVertexsValency();
     }
+
+    @Override
+    public String toString() {
+        
+        StringBuilder stringBuilder = new StringBuilder("Graph: {");
+        
+        boolean isFirst = true;
+        
+        for (Edge edge: this.edges) {
+            if (!isFirst) {
+                stringBuilder.append(", ");
+            } else {
+                isFirst = false;
+            }
+            stringBuilder.append(edge.getVertex1().getIndex() + "-" + edge.getVertex2().getIndex());
+        }
+        return stringBuilder.toString();
+    }
+    
+    
 }
  
