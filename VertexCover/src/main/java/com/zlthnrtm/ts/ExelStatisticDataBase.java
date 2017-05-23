@@ -17,7 +17,7 @@ public class ExelStatisticDataBase implements StatisticDataBase{
     }
 
     @Override
-    public boolean addNode(Integer vertexCount, Integer edgeCount, Long nanotime, String label) {
+    public boolean addNode(Integer vertexCount, Integer edgeCount, Double nanotime, String label) {
         
         
         

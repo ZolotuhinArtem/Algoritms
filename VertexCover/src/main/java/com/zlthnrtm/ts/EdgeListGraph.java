@@ -115,6 +115,8 @@ public class EdgeListGraph{
             }
             stringBuilder.append(edge.getVertex1().getIndex() + "-" + edge.getVertex2().getIndex());
         }
+        
+        stringBuilder.append("}");
         return stringBuilder.toString();
     }
     

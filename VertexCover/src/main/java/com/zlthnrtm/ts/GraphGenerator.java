@@ -1,51 +1,70 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.zlthnrtm.ts;
 
 import com.zlthnrtm.ts.SimpleGraphBuilder.SimpleGraphBuilderVertexAsInteger;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Random;
+import java.util.Set;
 
-/**
- *
- * @author м
- */
 public class GraphGenerator {
-    
-    public static EdgeListGraph generate(int vertices, double denisty) {
+   
+
+    public static EdgeListGraph fullGraphGeneration(int vertexCount) {
+        SimpleGraphBuilderVertexAsInteger simpleGraphBuilderVertexAsInteger = SimpleGraphBuilder.vertexAsInteger();
+        for (int i = 0; i < vertexCount; i++) {
+            for (int j = i + 1; j < vertexCount; j++) {
+                simpleGraphBuilderVertexAsInteger.addEdge(i, j);
+            }
+        }
+        return simpleGraphBuilderVertexAsInteger.build();
+    }
+
+    public static EdgeListGraph treeGeneration(int vertexCount) {
+        Random random = new Random();
+        
+        SimpleGraphBuilderVertexAsInteger simpleGraphBuilderVertexAsInteger = SimpleGraphBuilder.vertexAsInteger();
+        
+        simpleGraphBuilderVertexAsInteger.addEdge(0, 1);
+        
+        for (int i = 2; i < vertexCount; i++) {
+            simpleGraphBuilderVertexAsInteger.addEdge(random.nextInt(i), i);
+        }
+        
+        return simpleGraphBuilderVertexAsInteger.build();
+    }
+
+    public static EdgeListGraph halfFilledGrafGeneration(int vertexCount) {
         
         EdgeListGraph edgeListGraph = null;
         
-        List<Edge> edges = new ArrayList<>();
-        int edgesAmount = 0;
+        int edgeCount = (int) ((vertexCount + 2) * (vertexCount - 1)) / 4;
         
-        edgesAmount = (int) Math.round(vertices * (vertices - 1) / 2 * denisty);
+        List<Edge> edges = new ArrayList<>(edgeCount);
         
-        SimpleGraphBuilderVertexAsInteger sGBVAI = SimpleGraphBuilder.vertexAsInteger();
+        SimpleGraphBuilderVertexAsInteger simpleGraphBuilderVertexAsInteger = SimpleGraphBuilder.vertexAsInteger();
         
-        for (int i = 0; i < edgesAmount; i++) {
+        for (int i = 0; i < edgeCount; i++) {
             
-            int vertex1 = 0 + (int) (Math.random() * vertices);
-            int vertex2 = 0 + (int) (Math.random() * vertices);
+            int vertex1 = 0 + (int) (Math.random() * vertexCount);
+            int vertex2 = 0 + (int) (Math.random() * vertexCount);
             Edge edge = new Edge(new Vertex(vertex1), new Vertex(vertex2));
             
-            while (edges.contains(edge) || (vertex1 != vertex2)) {
+            while (edges.contains(edge) || (vertex1 == vertex2)) {
                 
-                vertex1 = (int) (Math.random() * vertices);
-                vertex2 = (int) (Math.random() * vertices);
+                vertex1 = (int) (Math.random() * vertexCount);
+                vertex2 = (int) (Math.random() * vertexCount);
                 edge = new Edge(new Vertex(vertex1), new Vertex(vertex2));
             }
             
             edges.add(edge);
-            sGBVAI.addEdge(vertex1, vertex2);
+            simpleGraphBuilderVertexAsInteger.addEdge(vertex1, vertex2);
         }
         
-        edgeListGraph = sGBVAI.build();
+        edgeListGraph = simpleGraphBuilderVertexAsInteger.build();
         
         return edgeListGraph;
     }
+
+    
 }

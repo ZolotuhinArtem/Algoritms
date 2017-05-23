@@ -13,6 +13,6 @@ public interface StatisticDataBase {
     
     void clear();
     
-    boolean addNode(Integer vertexCount, Integer edgeCount, Long nanotime, String label);
+    boolean addNode(Integer vertexCount, Integer edgeCount, Double nanotime, String label);
     
 }
