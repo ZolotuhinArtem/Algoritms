@@ -1,6 +1,7 @@
 package com.zlthnrtm.ts;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -48,6 +49,7 @@ public class Main {
         double averageTime;
         
         for (int i = MINIMAL_VERTEX_COUNT; i < maxVertexCount; i += vertexStep) {
+            
             System.out.println("Current vertex count: " + i);
             
             averageTime = 0.0;
@@ -152,13 +154,12 @@ public class Main {
             System.out.println("Average time for Tree Greedy: " + averageTime + " nanoseconds" + "\n");
             statisticDataBase.addNode(i, i - 1, averageTime, "TGREEDY");
             
-            
             System.out.println();
             drawProgress(i - MINIMAL_VERTEX_COUNT, maxVertexCount - MINIMAL_VERTEX_COUNT - 1);
             System.out.println("\n----------------------------------------------------------------------------\n");
         }
         
-        
+        statisticDataBase.save("Table" + new Date(System.currentTimeMillis()) + ".xls");
     }
     
     public static void demonstration(){

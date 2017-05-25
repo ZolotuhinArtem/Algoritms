@@ -11,7 +11,20 @@ package com.zlthnrtm.ts;
  */
 public interface StatisticDataBase {
     
+    public static final String FSTRICT = "FSTRICT";
+    public static final String HSTRICT = "HSTRICT";
+    public static final String TSTRICT = "TSTRICT";
+    public static final String FLAZY = "FLAZY";
+    public static final String HLAZY = "HLAZY";
+    public static final String TLAZY = "TLAZY";
+    public static final String FGREEDY = "FGREEDY";
+    public static final String HGREEDY = "HGREEDY";
+    public static final String TGREEDY = "TGREEDY";
+    
+    
     void clear();
+    
+    boolean save(String name);
     
     boolean addNode(Integer vertexCount, Integer edgeCount, Double nanotime, String label);
     
