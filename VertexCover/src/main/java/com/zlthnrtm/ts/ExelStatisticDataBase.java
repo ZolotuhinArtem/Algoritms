@@ -72,5 +72,10 @@ public class ExelStatisticDataBase implements StatisticDataBase{
         }
         return true;
     }
+
+    @Override
+    public boolean addNode(StatisticNode node) {
+        return this.addNode(node.getVertexCount(), node.getEdgeCount(), node.getNanotime(), node.getLabel());
+    }
     
 }

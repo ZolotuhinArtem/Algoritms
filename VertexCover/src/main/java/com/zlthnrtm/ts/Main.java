@@ -1,8 +1,11 @@
 package com.zlthnrtm.ts;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.InputMismatchException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -48,6 +51,10 @@ public class Main {
         
         double averageTime;
         
+        List<StatisticNode> statisticNodes = new LinkedList<>();
+        
+        elg = GraphGenerator.fullGraphGeneration(3);
+        
         for (int i = MINIMAL_VERTEX_COUNT; i < maxVertexCount; i += vertexStep) {
             
             System.out.println("Current vertex count: " + i);
@@ -61,7 +68,8 @@ public class Main {
                 averageTime += (double) totalTime / (double) testCountPerTest;
             }
             System.out.println("Average time for FULL Strict: " + averageTime + " nanoseconds");
-            statisticDataBase.addNode(i, i * (i - 1) / 2, averageTime, "FSTRICT");
+            statisticNodes.add(new StatisticNode(i, i * (i - 1) / 2, averageTime, "FSTRICT"));
+            
             
             averageTime = 0.0;
             for (int j = 0; j < testCountPerTest; j++) {
@@ -72,7 +80,7 @@ public class Main {
                 averageTime += (double) totalTime / (double) testCountPerTest;
             }
             System.out.println("Average time for Half Strict: " + averageTime + " nanoseconds");
-            statisticDataBase.addNode(i, (i + 2) * (i - 1) / 4, averageTime, "HSTRICT");
+            statisticNodes.add(new StatisticNode(i, (i + 2) * (i - 1) / 4, averageTime, "HSTRICT"));
             
             averageTime = 0.0;
             for (int j = 0; j < testCountPerTest; j++) {
@@ -83,8 +91,7 @@ public class Main {
                 averageTime += (double) totalTime / (double) testCountPerTest;
             }
             System.out.println("Average time for Tree Strict: " + averageTime + " nanoseconds" + "\n");
-            statisticDataBase.addNode(i, i - 1, averageTime, "TSTRICT");
-            
+            statisticNodes.add(new StatisticNode(i, i - 1, averageTime, "TSTRICT"));
             //------------------------------------------------------------------------------------------
             averageTime = 0.0;
             for (int j = 0; j < testCountPerTest; j++) {
@@ -95,7 +102,7 @@ public class Main {
                 averageTime += (double) totalTime / (double) testCountPerTest;
             }
             System.out.println("Average time for FULL Lazy: " + averageTime + " nanoseconds");
-            statisticDataBase.addNode(i, i * (i - 1) / 2, averageTime, "FLAZY");
+            statisticNodes.add(new StatisticNode(i, i * (i - 1) / 2, averageTime, "FLAZY"));
             
             averageTime = 0.0;
             for (int j = 0; j < testCountPerTest; j++) {
@@ -106,7 +113,7 @@ public class Main {
                 averageTime += (double) totalTime / (double) testCountPerTest;
             }
             System.out.println("Average time for Half Lazy: " + averageTime + " nanoseconds");
-            statisticDataBase.addNode(i, (i + 2) * (i - 1) / 4, averageTime, "HLAZY");
+            statisticNodes.add(new StatisticNode(i, (i + 2) * (i - 1) / 4, averageTime, "HLAZY"));
             
             averageTime = 0.0;
             for (int j = 0; j < testCountPerTest; j++) {
@@ -117,7 +124,7 @@ public class Main {
                 averageTime += (double) totalTime / (double) testCountPerTest;
             }
             System.out.println("Average time for Tree Lazy: " + averageTime + " nanoseconds" + "\n");
-            statisticDataBase.addNode(i, i - 1, averageTime, "TLAZY");
+            statisticNodes.add(new StatisticNode(i, i - 1, averageTime, "TLAZY"));
             
             //-----------------------------------------------------------------------------------------
             
@@ -130,7 +137,7 @@ public class Main {
                 averageTime += (double) totalTime / (double) testCountPerTest;
             }
             System.out.println("Average time for FULL Greedy: " + averageTime + " nanoseconds");
-            statisticDataBase.addNode(i, i * (i - 1) / 2, averageTime, "FGREEDY");
+            statisticNodes.add(new StatisticNode(i, i * (i - 1) / 2, averageTime, "FGREEDY"));
             
             averageTime = 0.0;
             for (int j = 0; j < testCountPerTest; j++) {
@@ -141,7 +148,7 @@ public class Main {
                 averageTime += (double) totalTime / (double) testCountPerTest;
             }
             System.out.println("Average time for Half Greedy: " + averageTime + " nanoseconds");
-            statisticDataBase.addNode(i, (i + 2) * (i - 1) / 4, averageTime, "HGREEDY");
+            statisticNodes.add(new StatisticNode(i, (i + 2) * (i - 1) / 4, averageTime, "HGREEDY"));
             
             averageTime = 0.0;
             for (int j = 0; j < testCountPerTest; j++) {
@@ -152,14 +159,18 @@ public class Main {
                 averageTime += (double) totalTime / (double) testCountPerTest;
             }
             System.out.println("Average time for Tree Greedy: " + averageTime + " nanoseconds" + "\n");
-            statisticDataBase.addNode(i, i - 1, averageTime, "TGREEDY");
+            statisticNodes.add(new StatisticNode(i, i - 1, averageTime, "TGREEDY"));
             
             System.out.println();
             drawProgress(i - MINIMAL_VERTEX_COUNT, maxVertexCount - MINIMAL_VERTEX_COUNT - 1);
             System.out.println("\n----------------------------------------------------------------------------\n");
         }
         
-        statisticDataBase.save("Table" + new Date(System.currentTimeMillis()) + ".xls");
+        Collections.sort(statisticNodes);
+        for (StatisticNode node: statisticNodes) {
+            statisticDataBase.addNode(node);
+        }
+        statisticDataBase.save("Table: " + new Date(System.currentTimeMillis()) + ".xls");
     }
     
     public static void demonstration(){

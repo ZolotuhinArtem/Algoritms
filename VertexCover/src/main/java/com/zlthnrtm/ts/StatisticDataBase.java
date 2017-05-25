@@ -28,4 +28,6 @@ public interface StatisticDataBase {
     
     boolean addNode(Integer vertexCount, Integer edgeCount, Double nanotime, String label);
     
+    boolean addNode(StatisticNode node);
+    
 }
