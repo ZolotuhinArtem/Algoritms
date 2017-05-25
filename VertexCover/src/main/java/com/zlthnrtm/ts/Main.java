@@ -1,5 +1,6 @@
 package com.zlthnrtm.ts;
 
+import com.zlthnrtm.ts.SimpleGraphBuilder.SimpleGraphBuilderVertexAsInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,12 +14,34 @@ public class Main {
     
     public static final int MINIMAL_VERTEX_COUNT = 3;
     
+    public static final int MINIMAL_EDGE_COUNT = 1;
+    
     public static final int MINIMAL_VERTEX_STEP_VALUE = 1;
     
     public static final int MINIMAL_TEST = 1;
     
     public static void main(String[] args) {
         
+        int choose = 0;
+        while ((choose > 2) || (choose < 1)) {
+            System.out.print("Choose:\n\t1 - test\n\t2 - normal work");
+            choose = readInt();
+        }
+        
+        switch (choose) {
+            case 1:
+                test();
+                break;
+            case 2:
+                normal();
+                break;
+            default:
+                System.out.println("ERROR!");
+                break;
+        }
+    }
+    
+    public static void test(){
         int maxVertexCount = 0;
         int vertexStep = 0;
         int testCountPerTest = 0;
@@ -55,7 +78,7 @@ public class Main {
         
         elg = GraphGenerator.fullGraphGeneration(3);
         
-        for (int i = MINIMAL_VERTEX_COUNT; i < maxVertexCount; i += vertexStep) {
+        for (int i = MINIMAL_VERTEX_COUNT; i <= maxVertexCount; i += vertexStep) {
             
             System.out.println("Current vertex count: " + i);
             
@@ -173,15 +196,33 @@ public class Main {
         statisticDataBase.save("Table: " + new Date(System.currentTimeMillis()) + ".xls");
     }
     
-    public static void demonstration(){
-        EdgeListGraph edgeListGraph = SimpleGraphBuilder.vertexAsInteger()
-                .addEdge(0, 1)
-                .addEdge(1, 2)
-                .addEdge(2, 3)
-                .addEdge(3, 4)
-                .addEdge(4, 0)
-                .addEdge(6, 6)
-                .build();
+    public static void normal(){
+        
+        int edgeCount = -1;
+        while (edgeCount < MINIMAL_EDGE_COUNT) {
+            System.out.println("If you enter edge, which has two equal vertices, than it is not edge, it is alone vertex, which has valency 0.\n"
+                + "Enter edge count (min value = " + MINIMAL_EDGE_COUNT + "):");
+            edgeCount = readInt();
+        }
+        
+        SimpleGraphBuilderVertexAsInteger vertexBuilder = SimpleGraphBuilder.vertexAsInteger();
+        int v1, v2;
+        for (int i = 0; i < edgeCount; i++) {
+            System.out.println("#### Edge number " + (i + 1) + " ####");
+            v1 = readVertex("First vertex");
+            v2 = readVertex("Second vertex");
+            vertexBuilder.addEdge(v1, v2);
+        }
+        
+        EdgeListGraph edgeListGraph = vertexBuilder.build();
+        
+//        EdgeListGraph edgeListGraph = SimpleGraphBuilder.vertexAsInteger()
+//                .addEdge(0, 1)
+//                .addEdge(1, 2)
+//                .addEdge(2, 3)
+//                .addEdge(3, 4)
+//                .addEdge(4, 0)
+//                .build();
         
         
         GraphVertexCover graphVertexCover = new GraphVertexCover();
@@ -220,5 +261,19 @@ public class Main {
         }
         str += "] " + (int) Math.round(k * 100) + "%";
         System.out.println(str);
+    }
+
+    private static int readVertex(String prefix) {
+        int vertex = -1;
+        while (vertex < 0) {
+            System.out.print(prefix);
+            vertex = readInt();
+            if (vertex >= 0) {
+                return vertex;
+            } else {
+                System.out.println("Error! Vertex index is smaller than zero!");
+            }
+        }
+        return -1;
     }
 }
